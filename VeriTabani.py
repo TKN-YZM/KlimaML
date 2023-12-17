@@ -4,14 +4,14 @@ import pandas as pd
 class DataBase:
     
     def __init__(self):
-        
+        #veri tabanı python bağlantıları
         self.conn=sqlite3.connect("KlimaVerileri.db")
         self.cursor=self.conn.cursor()
         self.__tabloOlustur()
    
         
     def __tabloOlustur(self):
-        
+        #veri tabanı yoksa oluşturma
         self.cursor.execute("Create Table if not exists KlimaTablo (Sıcaklık Real,Nem Real,KlimaAcik Int)")
         self.conn.commit()
   
@@ -40,7 +40,7 @@ class DataBase:
             
         
     def veriGoster(self):
-        
+        #tüm verilerin getirilmesi  / proje aşamasında verilerin gözetilmesi için oluşturulmuş hazır fonksiyon
         self.cursor.execute("Select * from KlimaTablo")
         liste=self.cursor.fetchall()
         print("Sıcaklık |Nem |Klima Durumu")
