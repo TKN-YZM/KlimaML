@@ -13,3 +13,7 @@ Bu proje, sesli komutlarla klima kontrolünü sağlayan ve arka planda sıcaklı
  Sesli komut ile kişisel asistana "klima aç" komutu gönderildiği zaman arka planda veri tabanına Arduino ve DHT11 nem ve sıcaklık sensörü ile veriler kaydedilir ve ardından makine öğrnemesi algoritaması (Logistic Reg) ile bu veriler eğitilir ve tahminde bulunması sağlanır. Ardından asistanı her çağırdımız zaman makine tahmin ile otomatik klima işlemleri gerçekleştirilir.
 
 
+<div align="center">
+  <img  src="https://github.com/TKN-YZM/KlimaML/blob/master/Z1.jpg" alt="Proje Çizim">
+  <img  src="https://github.com/TKN-YZM/KlimaML/blob/master/Z2.jpg" alt="Proje Kod">
+</div>
