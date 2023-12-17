@@ -1,3 +1,6 @@
+from pyfirmata import Arduino, util #pip install pyfirmata
+import Adafruit_DHT                 #pip install adafruit-circuitpython-dht
+import MakineAlgort 
 
 
 class RobotikIslem():
