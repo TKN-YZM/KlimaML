@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 import sqlite3
 import VeriTabani as DB
-from sklearn.metrics import confusion_matrix
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV 
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix #Performans ölçümü
+from sklearn.linear_model import LogisticRegression  #ML Algoritması
+from sklearn.model_selection import GridSearchCV  #En optimum parametre 
+from sklearn.model_selection import train_test_split 
 
 
 class MakineAlgorit():
@@ -13,10 +13,10 @@ class MakineAlgorit():
     def __init__(self):
         
         self.db=DB.DataBase()
-        self.data=self.db.veriTabaniGetir()
-        sicaklik_nem=self.data[["Sıcaklık","Nem"]]
+        self.data=self.db.veriTabaniGetir()  #Tüm verilerin getirilmesi
+        sicaklik_nem=self.data[["Sıcaklık","Nem"]] 
         klima_deger=self.data[["KlimaAcik"]]
-        print(self.data.corr())
+        print(self.data.corr()) #Veriler arası korelasyon gözetme
         self.x_Train,self.x_Test,self.y_Train,self.y_Test=train_test_split(sicaklik_nem,klima_deger,random_state=2,test_size=0.2)
     
     #Algoritamanın öğrenim/tahmin yüzdeliği
