@@ -14,9 +14,9 @@ class RobotikIslem():
         return [sicaklik_deger,nem_deger]
 
     def klimaIslemi(self,durum):
-        self.board.get_pin("d:7:o") #sensör bağlı pin
+        self.board.get_pin("d:7:o") #klima bağlı pin
         if(durum):
-             board.digital[pin_numarasi].write(1)
+             board.digital[7].write(1)
              board.exit()
         else:
             board.digital[pin_numarasi].write(0)
