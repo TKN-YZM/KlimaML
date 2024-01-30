@@ -1,49 +1,45 @@
-from pyfirmata import Arduino, util #pip install pyfirmata
-import Adafruit_DHT                 #pip install adafruit-circuitpython-dht
-import MakineAlgort 
+import MakineAlgort
+import serial
+import time
 
+ML=MakineAlgort.MakineAlgorit()
 
 class RobotikIslem():
-    
-    def __init__(self):
-        
-        self.port = 'COM4'  #İletişim kurulacağı port
-        self.board = Arduino(port)
-        
-    def sensorDeger(self):
-        dht_pin = 2 
-        dht_sensor = Adafruit_DHT.DHT11
-        nem_deger, sicaklik_deger = Adafruit_DHT.read_retry(dht_sensor, dht_pin)  
-        return [sicaklik_deger,nem_deger]
 
+    def __init__(self):
+        self.port = 'COM4'
+        self.baud_rate=9600
+    def sensorDeger(self):
+
+        # Arduino'ya bağlan
+        ser = serial.Serial('COM4', 9600)  # Arduino'nun bağlı olduğu seri portu belirtin
+
+        # Arduino'dan veriyi oku
+        arduino_data = ser.readline().decode('latin-1').rstrip()
+
+        nem = arduino_data.split("H:")[1].split("T:")[0]
+        sicaklik = arduino_data.split("H:")[1].split("T:")[1]
+        # Gelen veriyi ekrana yazdır
+        print("Nem: ", nem, "Sicaklik: ", sicaklik)
+
+        return[sicaklik,nem]
     def klimaIslemi(self,durum):
-        self.board.get_pin("d:7:o") #klima (röle) bağlı pin
-        if(durum):
-             board.digital[7].write(1) #röle aktif edilir
-             board.exit()
-        else:
-            board.digital[pin_numarasi].write(0) #röle kapatılır
-            board.exit()
-             
-    
+
+        arduino_port = "COM4"  # Arduino'nun bağlı olduğu port (Windows'ta "COMx" olabilir)
+        baud_rate = 9600  # Arduino ile aynı baud hızı
+
+        arduino = serial.Serial(arduino_port, baud_rate)
+        time.sleep(2)  # Arduino'nun hazır olması için biraz bekle
+
+        arduino.write(str(durum).encode())  # Komutu Arduino'ya gönder
+
     def otomatikKlima(self):
-        
-        data=self.sensorDeger()   #sensörden değer alma 
-        tahmin=ML.TahminAlgorit(data[0], data[1])  #tahmin algoritmasına sıcaklık ve nem değerlerini gönderme
-        if(tahmin==1):
-            self.klimaIslemi(1)  
+        data=self.sensorDeger()
+        print("Sıcaklık: ",data)
+        tahmin=ML.TahminAlgorit(data[0], data[1])
+        print("Makine Tahmini:",tahmin)
+        if(tahmin==True):
+            self.klimaIslemi(1)
+            print("Klima oto açıldı")
             return 1
-        else:
-            self.klimaIslemi(0)
-            return 0
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
